@@ -108,6 +108,9 @@ namespace TunicRandomizer {
         }
 
         bool IsTunicUri(Uri uri) {
+            if (uri.Scheme != "ws" && uri.Scheme != "wss" && uri.Scheme != "archipelago") {
+                return false;
+            }
             if (uri.Query.Length <= 1) {
                 return true;
             }
@@ -132,9 +135,6 @@ namespace TunicRandomizer {
                 }
                 if (uri.Host != "") {
                     TunicRandomizer.Settings.ConnectionSettings.Hostname = uri.Host;
-                    if (uri.AbsolutePath.Length > 1) {
-                        TunicRandomizer.Settings.ConnectionSettings.Hostname += ":" + uri.Port.ToString() + uri.AbsolutePath;
-                    }
                 }
                 if (uri.Port > -1) {
                     TunicRandomizer.Settings.ConnectionSettings.Port = uri.Port.ToString();
